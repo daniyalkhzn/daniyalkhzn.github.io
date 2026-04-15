@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BRUME</title>
+
+<!-- Luxury + Gen Z hybrid fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+/* ========== GLOBAL ========== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:#070707;
+  color:#fff;
+  font-family:'Inter',sans-serif;
+  overflow-x:hidden;
+}
+
+/* ========== FOG LAYERS ========== */
+.fog{
+  position:fixed;
+  width:200%;
+  height:200%;
+  background: url('https://i.imgur.com/8IuucQZ.png');
+  opacity:0.05;
+  animation:moveFog 90s linear infinite;
+  z-index:1;
+}
+
+.fog2{
+  opacity:0.03;
+  animation-duration:140s;
+}
+
+@keyframes moveFog{
+  from{transform:translate(0,0);}
+  to{transform:translate(-50%,-50%);}
+}
+
+/* ========== CURSOR GLOW ========== */
+.cursor{
+  position:fixed;
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  pointer-events:none;
+  mix-blend-mode:difference;
+  z-index:999;
+}
+
+/* ========== SCROLL SNAP (reel feel) ========== */
+html{
+  scroll-snap-type:y mandatory;
+}
+
+.section{
+  height:100vh;
+  scroll-snap-align:start;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  position:relative;
+  text-align:center;
+  padding:20px;
+}
+
+/* ========== BACKGROUND IMAGES ========== */
+.bg{
+  position:absolute;
+  width:120%;
+  height:120%;
+  object-fit:cover;
+  z-index:-2;
+  filter:brightness(0.55) contrast(1.1);
+  transform:scale(1.1);
+}
+
+/* ========== TYPOGRAPHY ========== */
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:6rem;
+  letter-spacing:0.25em;
+}
+
+h2{
+  font-family:'Playfair Display',serif;
+  font-size:2.8rem;
+}
+
+p{
+  opacity:0.75;
+  margin-top:10px;
+}
+
+/* ========== FADE ========== */
+.fade{
+  opacity:0;
+  transform:translateY(40px);
+  transition:1.2s ease;
+}
+
+.fade.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ========== MUSIC PLAYER ========== */
+.player{
+  position:fixed;
+  bottom:20px;
+  left:20px;
+  padding:12px 18px;
+  border:1px solid rgba(255,255,255,0.2);
+  backdrop-filter:blur(12px);
+  font-size:0.75rem;
+  z-index:10;
+  cursor:pointer;
+}
+
+/* ========== GRID SECTION ========== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  width:90%;
+  margin-top:20px;
+}
+
+.grid img{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  border-radius:10px;
+  transition:0.4s;
+}
+
+.grid img:hover{
+  transform:scale(1.05);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  h1{font-size:3.5rem;}
+  .grid{grid-template-columns:1fr;}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- FOG -->
+<div class="fog"></div>
+<div class="fog fog2"></div>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+<source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3">
+</audio>
+
+<div class="player" onclick="toggleMusic()">▶ BRUME SOUND</div>
+
+<!-- HERO -->
+<div class="section">
+  <img class="bg" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93">
+  <h1 class="fade">BRUME</h1>
+  <p class="fade">coffee in the cloud</p>
+</div>
+
+<!-- EXPERIENCE -->
+<div class="section">
+  <img class="bg" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085">
+  <h2 class="fade">an atmosphere, not a café</h2>
+  <p class="fade">crafted for slow mornings & fast thoughts</p>
+</div>
+
+<!-- MENU GRID -->
+<div class="section">
+  <h2 class="fade">signature pours</h2>
+
+  <div class="grid fade">
+    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93">
+    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348">
+    <img src="https://images.unsplash.com/photo-1494314671902-399b18174975">
+  </div>
+
+  <p class="fade">cloud latte · mist cold brew · velvet foam</p>
+</div>
+
+<!-- IDENTITY -->
+<div class="section">
+  <h2 class="fade">brume is a mood system</h2>
+  <p class="fade">not coffee. not café. just experience.</p>
+</div>
+
+<!-- LOCATION -->
+<div class="section">
+  <h2 class="fade">hazratganj, lucknow</h2>
+
+  <div style="width:90%;height:300px;border-radius:20px;overflow:hidden;margin-top:20px;" class="fade">
+    <iframe
+      src="https://maps.google.com/maps?q=Hazratganj%20Lucknow&t=&z=13&ie=UTF8&iwloc=&output=embed"
+      width="100%" height="100%">
+    </iframe>
+  </div>
+</div>
+
+<!-- SPOTIFY STYLE PLAYER -->
+<div class="player" onclick="toggleMusic()">
+  now playing — brume sessions
+</div>
+
+<script>
+
+/* CURSOR */
+const cursor=document.getElementById("cursor");
+document.addEventListener("mousemove",(e)=>{
+  cursor.style.left=e.clientX+"px";
+  cursor.style.top=e.clientY+"px";
+});
+
+/* MUSIC */
+const music=document.getElementById("music");
+function toggleMusic(){
+  music.paused ? music.play() : music.pause();
+}
+
+/* SCROLL ANIMATIONS */
+const fade=document.querySelectorAll(".fade");
+
+window.addEventListener("scroll",()=>{
+  fade.forEach(el=>{
+    if(el.getBoundingClientRect().top<window.innerHeight-80){
+      el.classList.add("show");
+    }
+  });
+});
+
+</script>
+
+</body>
+</html>
